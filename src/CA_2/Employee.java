@@ -1,9 +1,9 @@
 package CA_2;
 
-/**
- * School employee
- */
+// School employee
+
 public class Employee {
+
     private int id;
     private String name;
     private Department department;
@@ -20,5 +20,22 @@ public class Employee {
     // Convenience constructor
     public Employee(String name, Department department, RoleType roleType) {
         this(0, name, department, roleType);
+    }
+
+    // Getters
+    public int getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public RoleType getRoleType() {
+        return roleType;
     }
 }

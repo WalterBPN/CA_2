@@ -1,7 +1,7 @@
 package CA_2;
 
 /**
- * Hierarchical roles of the school.
+ * Hierarchical roles of the school
  */
 public enum RoleType {
     DIRECTOR,
