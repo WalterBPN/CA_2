@@ -1,13 +1,12 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package CA_2;
 
 /**
- *
- * @author Walter
+ * Hierarchical roles of the school.
  */
-public class RoleType {
-    
+public enum RoleType {
+    DIRECTOR,
+    VICE_DIRECTOR,
+    HEAD_OF_DEPARTMENT,
+    TEACHER,
+    ASSISTANT
 }
