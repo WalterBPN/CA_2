@@ -38,4 +38,28 @@ public class Employee {
     public RoleType getRoleType() {
         return roleType;
     }
+    
+    // Setters
+    public void setId(int id) {
+        if (id < 0) throw new IllegalArgumentException("id must be >= 0");
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        if (name == null || name.trim().isEmpty()) {
+            throw new IllegalArgumentException("name cannot be blank");
+        }
+        this.name = name.trim();
+    }
+
+    public void setDepartment(Department department) {
+        if (department == null) throw new IllegalArgumentException("department cannot be null");
+        this.department = department;
+    }
+
+    public void setRoleType(RoleType roleType) {
+        if (roleType == null) throw new IllegalArgumentException("roleType cannot be null");
+        this.roleType = roleType;
+    }
+
 }
