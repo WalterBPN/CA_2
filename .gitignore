@@ -1,0 +1,33 @@
+# ==========================
+# NetBeans / Ant build files
+# ==========================
+nbproject/private/
+build/
+dist/
+nbactions.xml
+nb-configuration.xml
+
+# ==========================
+# OS generated files
+# ==========================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==========================
+# IDE files
+# ==========================
+.idea/
+*.iml
+.vscode/
+
+# ==========================
+# Temporary and backup files
+# ==========================
+*.log
+*.tmp
+*.bak
+*.swp
+~$*.docx
+~$*.xlsx
+~$*.pdf
