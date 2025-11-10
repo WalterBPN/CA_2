@@ -61,5 +61,16 @@ public class Employee {
         if (roleType == null) throw new IllegalArgumentException("roleType cannot be null");
         this.roleType = roleType;
     }
+    
+        @Override
+    public String toString() {
+        return "Employee{" +
+            "id=" + id +
+            ", name='" + name + '\'' +
+            ", department=" + department +
+            ", roleType=" + roleType +
+            '}';
+    }
+
 
 }
