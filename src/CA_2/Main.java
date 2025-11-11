@@ -16,27 +16,15 @@ public class Main {
             console.println("4. " + MenuOption.CREATE_BINARY_TREE);
             console.println("5. " + MenuOption.EXIT);
 
-            String choice = console.readLineTrimmed("Enter your choice: ");
+            String choice = console.readLineTrimmed("Enter your choice (1–5): ");
 
             switch (choice) {
-                case "1":
-                    console.println("Sorting applicants...");
-                    break;
-                case "2":
-                    console.println("Searching records...");
-                    break;
-                case "3":
-                    console.println("Adding new record...");
-                    break;
-                case "4":
-                    console.println("Creating binary tree...");
-                    break;
-                case "5":
-                    console.println("Exiting program...");
-                    running = false;
-                    break;
-                default:
-                    console.println("Invalid option. Please try again.");
+                case "1" -> console.println("SORT");
+                case "2" -> console.println("SEARCH");
+                case "3" -> console.println("ADD_RECORD");
+                case "4" -> console.println("CREATE_BINARY_TREE");
+                case "5" -> { console.println("Exiting..."); running = false; }
+                default -> console.println("Invalid option. Try again.");
             }
         }
 
