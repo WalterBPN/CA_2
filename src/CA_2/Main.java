@@ -6,6 +6,18 @@ public class Main {
         boolean running = true;
 
         console.println("School Management System");
+        
+        DataStore store = new DataStore();
+
+
+    store.addEmployee("Emma", Department.ENGLISH, RoleType.TEACHER);
+    store.addEmployee("Murphy", Department.SCIENCE, RoleType.HEAD_OF_DEPARTMENT);
+
+    console.println("Current employees:");
+    for (Employee e : store.getEmployees()) {
+        console.println(e.toString());
+    }
+    console.println("End of test.\n");
 
         while (running) {
             console.println("");

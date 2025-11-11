@@ -25,4 +25,12 @@ public class DataStore {
     public int getNextId() {
         return nextId;
     }
+    
+    // Adds a new employee and auto-assigns an incremental id.
+public Employee addEmployee(String name, Department department, RoleType roleType) {
+    Employee e = new Employee(nextId, name, department, roleType);
+    employees.add(e);
+    nextId++;
+    return e;       
+}
 }
