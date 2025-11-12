@@ -1,6 +1,13 @@
 package CA_2;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Main {
+
+    // Applicants TXT provided by the professor (CSV-like content)
+    private static final String APPLICANTS_FILE = "Applicants_Form - Sample data file for read.txt";
+
     public static void main(String[] args) {
         ConsoleIO console = new ConsoleIO();
         boolean running = true;
@@ -22,24 +29,52 @@ public class Main {
 
             switch (choice) {
                 case "1" -> {
-                    console.println("SORT - Ordering employees by name (A - Z)");
+                    console.println("SORT - Order applicants from file by name (A - Z)");
 
-                    if (store.getEmployees().isEmpty()) {
-                        console.println("No employees in memory. Use 'ADD_RECORD' first.");
+                    ApplicantsLoader loader = new ApplicantsLoader();
+                    List<String> names = loader.loadFullNames(APPLICANTS_FILE);
+
+                    if (names.isEmpty()) {
+                        console.println("No applicants found in file.");
                         break;
                     }
 
                     Sorter sorter = new Sorter();
-                    // create a sorted snapshot; DataStore list remains unchanged
-                    var sorted = sorter.mergeSortByName(new java.util.ArrayList<>(store.getEmployees()));
+                    List<String> sorted = sorter.mergeSortStrings(new ArrayList<>(names));
 
                     int limit = Math.min(20, sorted.size());
-                    console.println("Showing first " + limit + " of " + sorted.size() + " employee(s):");
+                    console.println("Showing first " + limit + " of " + sorted.size() + " applicants:");
                     for (int i = 0; i < limit; i++) {
-                        console.println(sorted.get(i).toString());
+                        console.println("  " + sorted.get(i));
                     }
                 }
-                case "2" -> console.println("SEARCH");
+
+                case "2" -> {
+                    console.println("SEARCH - Find applicant by full name (from file)");
+
+                    ApplicantsLoader loader = new ApplicantsLoader();
+                    List<String> names = loader.loadFullNames(APPLICANTS_FILE);
+
+                    if (names.isEmpty()) {
+                        console.println("No applicants found in file.");
+                        break;
+                    }
+
+                    Sorter sorter = new Sorter();
+                    List<String> sorted = sorter.mergeSortStrings(new ArrayList<>(names));
+
+                    String query = console.readNonEmptyLine("Enter full name to search: ");
+
+                    Searcher searcher = new Searcher();
+                    int index = searcher.binarySearchByName(sorted, query);
+
+                    if (index >= 0) {
+                        console.println("Found: " + sorted.get(index));
+                    } else {
+                        console.println("No applicant found with that name.");
+                    }
+                }
+
                 case "3" -> {
                     console.println("Add New Employee");
 
@@ -70,8 +105,18 @@ public class Main {
                     Employee created = store.addEmployee(name, department, role);
                     console.println("Created: " + created);
                 }
-                case "4" -> console.println("CREATE_BINARY_TREE");
-                case "5" -> { console.println("Exiting..."); running = false; }
+
+                case "4" -> {
+                    console.println("CREATE_BINARY_TREE");
+                    // Next steps: build EmployeeBinaryTree with store.getEmployees()
+                    // and print height + total nodes.
+                }
+
+                case "5" -> {
+                    console.println("Exiting...");
+                    running = false;
+                }
+
                 default -> console.println("Invalid option. Try again.");
             }
         }

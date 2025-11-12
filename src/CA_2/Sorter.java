@@ -3,13 +3,14 @@ package CA_2;
 import java.util.ArrayList;
 import java.util.List;
 
-// Sorts employees by name (A - Z, case-insensitive) using recursive Merge Sort
+// Sort utilities using recursive Merge Sort (case-insensitive A - Z)
 
 public class Sorter {
 
     /*
-        - Returns a new list with employees sorted by name (ascending and case-insensitive)
-        - Does not modify the original source list, call with a copy if needed
+        - Returns a new list with Employees sorted by name (A - Z, case-insensitive)
+        - Does not modify the original source list; call with a copy if needed
+        - Used when sorting in-memory Employee records (DataStore)
     */
     public List<Employee> mergeSortByName(List<Employee> source) {
         if (source == null || source.size() <= 1) return source;
@@ -27,7 +28,7 @@ public class Sorter {
     }
 
     /*
-        - Merges two sorted lists of employees by name (A - Z, case-insensitive)
+        - Merges two sorted lists of Employees by name (A - Z, case-insensitive)
         - Used internally by mergeSortByName
     */
     private List<Employee> mergeByName(List<Employee> left, List<Employee> right) {
@@ -51,12 +52,55 @@ public class Sorter {
         }
 
         // Append remaining elements (if any)
-        while (leftIndex < left.size()) {
-            result.add(left.get(leftIndex++));
+        while (leftIndex < left.size())  result.add(left.get(leftIndex++));
+        while (rightIndex < right.size()) result.add(right.get(rightIndex++));
+
+        return result;
+    }
+
+    /*
+        - Returns a new list with applicant names (String) sorted (A - Z, case-insensitive)
+        - Does not modify the original source list; call with a copy if needed
+        - Used when sorting names loaded from the applicants TXT (CSV-like)
+    */
+    public List<String> mergeSortStrings(List<String> source) {
+        if (source == null || source.size() <= 1) return source;
+
+        int mid = source.size() / 2;
+        List<String> leftHalf  = new ArrayList<>(source.subList(0, mid));
+        List<String> rightHalf = new ArrayList<>(source.subList(mid, source.size()));
+
+        // Recursively sort each half
+        leftHalf  = mergeSortStrings(leftHalf);
+        rightHalf = mergeSortStrings(rightHalf);
+
+        // Merge two sorted halves
+        return mergeStrings(leftHalf, rightHalf);
+    }
+
+    /*
+        - Merges two sorted lists of Strings (A - Z, case-insensitive)
+        - Used internally by mergeSortStrings
+    */
+    private List<String> mergeStrings(List<String> left, List<String> right) {
+        List<String> result = new ArrayList<>(left.size() + right.size());
+        int leftIndex = 0;
+        int rightIndex = 0;
+
+        while (leftIndex < left.size() && rightIndex < right.size()) {
+            String leftVal  = (left.get(leftIndex)  == null) ? "" : left.get(leftIndex).toLowerCase();
+            String rightVal = (right.get(rightIndex) == null) ? "" : right.get(rightIndex).toLowerCase();
+
+            if (leftVal.compareTo(rightVal) <= 0) {
+                result.add(left.get(leftIndex++));
+            } else {
+                result.add(right.get(rightIndex++));
+            }
         }
-        while (rightIndex < right.size()) {
-            result.add(right.get(rightIndex++));
-        }
+
+        // Append remaining elements (if any)
+        while (leftIndex < left.size())  result.add(left.get(leftIndex++));
+        while (rightIndex < right.size()) result.add(right.get(rightIndex++));
 
         return result;
     }
