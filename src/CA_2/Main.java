@@ -21,7 +21,24 @@ public class Main {
             String choice = console.readLineTrimmed("Enter your choice (1-5): ");
 
             switch (choice) {
-                case "1" -> console.println("SORT");
+                case "1" -> {
+                    console.println("SORT - Ordering employees by name (A - Z)");
+
+                    if (store.getEmployees().isEmpty()) {
+                        console.println("No employees in memory. Use 'ADD_RECORD' first.");
+                        break;
+                    }
+
+                    Sorter sorter = new Sorter();
+                    // create a sorted snapshot; DataStore list remains unchanged
+                    var sorted = sorter.mergeSortByName(new java.util.ArrayList<>(store.getEmployees()));
+
+                    int limit = Math.min(20, sorted.size());
+                    console.println("Showing first " + limit + " of " + sorted.size() + " employee(s):");
+                    for (int i = 0; i < limit; i++) {
+                        console.println(sorted.get(i).toString());
+                    }
+                }
                 case "2" -> console.println("SEARCH");
                 case "3" -> {
                     console.println("Add New Employee");

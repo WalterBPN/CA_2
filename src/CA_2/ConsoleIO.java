@@ -6,7 +6,7 @@ public class ConsoleIO {
 
     private final Scanner scanner = new Scanner(System.in);
 
-    // Prints a message followed by a new line
+    // Prints a message followed by a new lines
     public void println(String message) {
         System.out.println(message);
     }
