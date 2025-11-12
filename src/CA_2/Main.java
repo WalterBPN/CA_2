@@ -26,22 +26,28 @@ public class Main {
                 case "3" -> {
                     console.println("Add New Employee");
 
-                    String name = console.readLineTrimmed("Name: ");
+                    String name = console.readNonEmptyLine("Name: ");
 
                     console.println("Select Department:");
-                    Department[] deps = Department.values();
-                    for (int i = 0; i < deps.length; i++) {
-                        console.println((i + 1) + ". " + deps[i]);
+                    Department[] departments = Department.values();
+                    for (int i = 0; i < departments.length; i++) {
+                        console.println((i + 1) + ". " + departments[i]);
                     }
-                    int departmentIndex = console.readIntInRange("Enter number (1-" + deps.length + "): ", 1, deps.length);
-                    Department department = deps[departmentIndex - 1];
+                    int departmentIndex = console.readIntInRange(
+                            "Enter number (1-" + departments.length + "): ",
+                            1, departments.length
+                    );
+                    Department department = departments[departmentIndex - 1];
 
                     console.println("Select Role:");
                     RoleType[] roles = RoleType.values();
                     for (int i = 0; i < roles.length; i++) {
                         console.println((i + 1) + ". " + roles[i]);
                     }
-                    int roleIndex = console.readIntInRange("Enter number (1-" + roles.length + "): ", 1, roles.length);
+                    int roleIndex = console.readIntInRange(
+                            "Enter number (1-" + roles.length + "): ",
+                            1, roles.length
+                    );
                     RoleType role = roles[roleIndex - 1];
 
                     Employee created = store.addEmployee(name, department, role);

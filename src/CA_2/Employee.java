@@ -1,7 +1,5 @@
 package CA_2;
 
-// School employee
-
 public class Employee {
 
     private int id;
@@ -9,7 +7,10 @@ public class Employee {
     private Department department;
     private RoleType roleType;
 
-    // Full constructor
+    /*
+        - Constructor Called by DataStore when creating a new employee record
+        - Includes the ID assigned automatically by the system
+    */
     public Employee(int id, String name, Department department, RoleType roleType) {
         this.id = id;
         this.name = name;
@@ -17,34 +18,38 @@ public class Employee {
         this.roleType = roleType;
     }
 
-    // Convenience constructor
+    // Used when creating a new employee record without specifying an ID
     public Employee(String name, Department department, RoleType roleType) {
         this(0, name, department, roleType);
     }
 
-    // Getters
+    // Returns the unique ID of the employee
     public int getId() {
         return id;
     }
 
+    // Returns the employee name
     public String getName() {
         return name;
     }
 
+    // Returns the department the employee belongs to
     public Department getDepartment() {
         return department;
     }
 
+    // Returns the employee’s role in the school hierarchy
     public RoleType getRoleType() {
         return roleType;
     }
     
-    // Setters
+    // Updates the employee ID
     public void setId(int id) {
         if (id < 0) throw new IllegalArgumentException("id must be >= 0");
         this.id = id;
     }
 
+    // Updates the employee name preventting blank or null values
     public void setName(String name) {
         if (name == null || name.trim().isEmpty()) {
             throw new IllegalArgumentException("name cannot be blank");
@@ -52,17 +57,26 @@ public class Employee {
         this.name = name.trim();
     }
 
+    /*
+        - Updates the department assigned to this employee
+        - Can be used when the employee changes department
+    */
     public void setDepartment(Department department) {
         if (department == null) throw new IllegalArgumentException("department cannot be null");
         this.department = department;
     }
 
+    /*
+        - Updates the employee’s role in the hierarchy
+        - Can be used if the employee is promoted or reassigned
+    */
     public void setRoleType(RoleType roleType) {
         if (roleType == null) throw new IllegalArgumentException("roleType cannot be null");
         this.roleType = roleType;
     }
     
-        @Override
+    // Returns a readable summary of the employee record. Used in console output when listing employees
+    @Override
     public String toString() {
         return "Employee{" +
             "id=" + id +
@@ -71,6 +85,4 @@ public class Employee {
             ", roleType=" + roleType +
             '}';
     }
-
-
 }
