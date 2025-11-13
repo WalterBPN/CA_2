@@ -6,11 +6,12 @@ import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
-// Loads applicant full names (First + Last) from the file
-
+// Loads applicant full names (First + Last) from the TXT file provided
+// Called by Main in SORT and SEARCH options of the Employee Management System
 public class ApplicantsLoader {
 
-    // Reads file, skips header, returns a list of "First Last" names
+    // Reads the file, skips the header,
+    // and returns a list of "First Last" full names
     public List<String> loadFullNames(String fileName) {
         List<String> names = new ArrayList<>();
         List<String> lines;
@@ -22,23 +23,32 @@ public class ApplicantsLoader {
             return names;
         }
 
-        if (lines.isEmpty()) return names;
+        if (lines.isEmpty()) {
+            return names;
+        }
 
-        // Skip header
+        // Skip header line (column names)
         for (int i = 1; i < lines.size(); i++) {
             String line = lines.get(i);
-            if (line == null || line.trim().isEmpty()) continue;
+            if (line == null || line.trim().isEmpty()) {
+                continue;
+            }
 
-            // naive file split
-            String[] cols = line.split(",", -1);
-            if (cols.length < 2) continue;
+            // Split content line by comma
+            String[] columns = line.split(",", -1);
+            if (columns.length < 2) {
+                continue;
+            }
 
-            String first = cols[0].trim();
-            String last  = cols[1].trim();
-            if (!first.isEmpty() || !last.isEmpty()) {
-                names.add((first + " " + last).trim());
+            String firstName = columns[0].trim();
+            String lastName  = columns[1].trim();
+
+            if (!firstName.isEmpty() || !lastName.isEmpty()) {
+                String fullName = (firstName + " " + lastName).trim();
+                names.add(fullName);
             }
         }
+
         return names;
     }
 }

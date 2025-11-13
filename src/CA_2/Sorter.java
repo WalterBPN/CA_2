@@ -3,17 +3,19 @@ package CA_2;
 import java.util.ArrayList;
 import java.util.List;
 
-// Sort utilities using recursive Merge Sort (case-insensitive A - Z)
-
+// Sort utilities using recursive Merge Sort (A - Z, case-insensitive)
+// Called by Main in the SORT and SEARCH options of the Employee Management System
 public class Sorter {
 
     /*
         - Returns a new list with Employees sorted by name (A - Z, case-insensitive)
         - Does not modify the original source list; call with a copy if needed
-        - Used when sorting in-memory Employee records (DataStore)
+        - Used when sorting in-memory company employees from DataStore
     */
     public List<Employee> mergeSortByName(List<Employee> source) {
-        if (source == null || source.size() <= 1) return source;
+        if (source == null || source.size() <= 1) {
+            return source;
+        }
 
         int mid = source.size() / 2;
         List<Employee> leftHalf  = new ArrayList<>(source.subList(0, mid));
@@ -24,19 +26,19 @@ public class Sorter {
         rightHalf = mergeSortByName(rightHalf);
 
         // Merge two sorted halves
-        return mergeByName(leftHalf, rightHalf);
+        return mergeEmployeesByName(leftHalf, rightHalf);
     }
 
     /*
         - Merges two sorted lists of Employees by name (A - Z, case-insensitive)
         - Used internally by mergeSortByName
     */
-    private List<Employee> mergeByName(List<Employee> left, List<Employee> right) {
+    private List<Employee> mergeEmployeesByName(List<Employee> left, List<Employee> right) {
         List<Employee> result = new ArrayList<>(left.size() + right.size());
         int leftIndex = 0;
         int rightIndex = 0;
 
-        // Compare current names from both lists and append the smaller (alphabetically)
+        // Compare current names from both lists and append the smaller one (alphabetically)
         while (leftIndex < left.size() && rightIndex < right.size()) {
             String leftName = left.get(leftIndex).getName();
             String rightName = right.get(rightIndex).getName();
@@ -52,19 +54,25 @@ public class Sorter {
         }
 
         // Append remaining elements (if any)
-        while (leftIndex < left.size())  result.add(left.get(leftIndex++));
-        while (rightIndex < right.size()) result.add(right.get(rightIndex++));
+        while (leftIndex < left.size()) {
+            result.add(left.get(leftIndex++));
+        }
+        while (rightIndex < right.size()) {
+            result.add(right.get(rightIndex++));
+        }
 
         return result;
     }
 
     /*
-        - Returns a new list with applicant names (String) sorted (A - Z, case-insensitive)
+        - Returns a new list with applicant names (Strings) sorted (A - Z, case-insensitive)
         - Does not modify the original source list; call with a copy if needed
-        - Used when sorting names loaded from the applicants TXT (CSV-like)
+        - Used in SORT and SEARCH for the applicants read from the TXT file
     */
     public List<String> mergeSortStrings(List<String> source) {
-        if (source == null || source.size() <= 1) return source;
+        if (source == null || source.size() <= 1) {
+            return source;
+        }
 
         int mid = source.size() / 2;
         List<String> leftHalf  = new ArrayList<>(source.subList(0, mid));
@@ -88,10 +96,10 @@ public class Sorter {
         int rightIndex = 0;
 
         while (leftIndex < left.size() && rightIndex < right.size()) {
-            String leftVal  = (left.get(leftIndex)  == null) ? "" : left.get(leftIndex).toLowerCase();
-            String rightVal = (right.get(rightIndex) == null) ? "" : right.get(rightIndex).toLowerCase();
+            String leftValue  = (left.get(leftIndex)  == null) ? "" : left.get(leftIndex).toLowerCase();
+            String rightValue = (right.get(rightIndex) == null) ? "" : right.get(rightIndex).toLowerCase();
 
-            if (leftVal.compareTo(rightVal) <= 0) {
+            if (leftValue.compareTo(rightValue) <= 0) {
                 result.add(left.get(leftIndex++));
             } else {
                 result.add(right.get(rightIndex++));
@@ -99,8 +107,12 @@ public class Sorter {
         }
 
         // Append remaining elements (if any)
-        while (leftIndex < left.size())  result.add(left.get(leftIndex++));
-        while (rightIndex < right.size()) result.add(right.get(rightIndex++));
+        while (leftIndex < left.size()) {
+            result.add(left.get(leftIndex++));
+        }
+        while (rightIndex < right.size()) {
+            result.add(right.get(rightIndex++));
+        }
 
         return result;
     }

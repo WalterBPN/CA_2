@@ -3,20 +3,27 @@ package CA_2;
 import java.util.ArrayList;
 import java.util.List;
 
+// Handles menu navigation and calls all major system features:
+// - SORT: applicants from TXT file using Merge Sort
+// - SEARCH: applicants from TXT file using Binary Search
+// - ADD_RECORD: add company employees to in-memory DataStore
+// - CREATE_BINARY_TREE: build a binary tree from stored employees
 public class Main {
 
-    // Applicants TXT provided by the professor (CSV-like content)
+    // TXT file provided
     private static final String APPLICANTS_FILE = "Applicants_Form - Sample data file for read.txt";
 
     public static void main(String[] args) {
+
         ConsoleIO console = new ConsoleIO();
+        DataStore store = new DataStore();
         boolean running = true;
 
-        console.println("School Management System");
-
-        DataStore store = new DataStore();
+        console.println("Employee Management System");
 
         while (running) {
+
+            // Menu
             console.println("");
             console.println("Select an option:");
             console.println("1. " + MenuOption.SORT);
@@ -28,8 +35,12 @@ public class Main {
             String choice = console.readLineTrimmed("Enter your choice (1-5): ");
 
             switch (choice) {
+
+                // ---------------------------------------------------------
+                // OPTION 1: SORT applicants from TXT (A - Z)
+                // ---------------------------------------------------------
                 case "1" -> {
-                    console.println("SORT - Order applicants from file by name (A - Z)");
+                    console.println("SORT - Ordering applicants by name (A - Z)");
 
                     ApplicantsLoader loader = new ApplicantsLoader();
                     List<String> names = loader.loadFullNames(APPLICANTS_FILE);
@@ -39,16 +50,22 @@ public class Main {
                         break;
                     }
 
+                    // Merge Sort (case-insensitive)
                     Sorter sorter = new Sorter();
                     List<String> sorted = sorter.mergeSortStrings(new ArrayList<>(names));
 
+                    // Output first 20 results
                     int limit = Math.min(20, sorted.size());
-                    console.println("Showing first " + limit + " of " + sorted.size() + " applicants:");
+                    console.println("Showing first " + limit + " of " + sorted.size() + " applicant(s):");
+
                     for (int i = 0; i < limit; i++) {
                         console.println("  " + sorted.get(i));
                     }
                 }
 
+                // ---------------------------------------------------------
+                // OPTION 2: SEARCH applicant name (Binary Search)
+                // ---------------------------------------------------------
                 case "2" -> {
                     console.println("SEARCH - Find applicant by full name (from file)");
 
@@ -60,6 +77,7 @@ public class Main {
                         break;
                     }
 
+                    // Sort first (Binary Search requires sorted input)
                     Sorter sorter = new Sorter();
                     List<String> sorted = sorter.mergeSortStrings(new ArrayList<>(names));
 
@@ -75,11 +93,15 @@ public class Main {
                     }
                 }
 
+                // ---------------------------------------------------------
+                // OPTION 3: ADD employee to in-memory DataStore
+                // ---------------------------------------------------------
                 case "3" -> {
                     console.println("Add New Employee");
 
                     String name = console.readNonEmptyLine("Name: ");
 
+                    // Select Department
                     console.println("Select Department:");
                     Department[] departments = Department.values();
                     for (int i = 0; i < departments.length; i++) {
@@ -91,6 +113,7 @@ public class Main {
                     );
                     Department department = departments[departmentIndex - 1];
 
+                    // Select Role
                     console.println("Select Role:");
                     RoleType[] roles = RoleType.values();
                     for (int i = 0; i < roles.length; i++) {
@@ -106,12 +129,30 @@ public class Main {
                     console.println("Created: " + created);
                 }
 
+                // ---------------------------------------------------------
+                // OPTION 4: CREATE BINARY TREE using employees in memory
+                // ---------------------------------------------------------
                 case "4" -> {
-                    console.println("CREATE_BINARY_TREE");
-                    // Next steps: build EmployeeBinaryTree with store.getEmployees()
-                    // and print height + total nodes.
+                    console.println("CREATE BINARY TREE - Building tree from employee records");
+
+                    if (store.getEmployees().isEmpty()) {
+                        console.println("No employees in memory. Use 'ADD_RECORD' first.");
+                        break;
+                    }
+
+                    EmployeeBinaryTree tree = new EmployeeBinaryTree();
+                    tree.buildFrom(new ArrayList<>(store.getEmployees()));
+
+                    console.println("Tree Stats:");
+                    console.println("  Total nodes: " + tree.countNodes());
+                    console.println("  Height:      " + tree.height());
+                    console.println("  Level-order preview:");
+                    console.println("  " + tree.levelOrderAsLine());
                 }
 
+                // ---------------------------------------------------------
+                // OPTION 5: EXIT
+                // ---------------------------------------------------------
                 case "5" -> {
                     console.println("Exiting...");
                     running = false;

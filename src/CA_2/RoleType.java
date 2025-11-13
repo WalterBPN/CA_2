@@ -1,12 +1,11 @@
 package CA_2;
 
-/**
- * Hierarchical roles of the school
- */
+// Company role types used to describe the employee position in the hierarchy
 public enum RoleType {
-    DIRECTOR,
-    VICE_DIRECTOR,
-    HEAD_OF_DEPARTMENT,
-    TEACHER,
+    MANAGER,
+    TEAM_LEAD,
+    ANALYST,
+    DEVELOPER,
     ASSISTANT
 }
+    

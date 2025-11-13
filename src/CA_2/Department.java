@@ -1,12 +1,11 @@
 package CA_2;
 
-//School departments catalogue
-
+// Company departments used to group employees in the management system
 public enum Department {
-    MATHEMATICS,
-    SCIENCE,
-    ENGLISH,
-    ARTS,
-    PHYSICAL_EDUCATION,
-    ADMINISTRATION
+    IT,
+    HR,
+    FINANCE,
+    MARKETING,
+    OPERATIONS,
+    CUSTOMER_SUPPORT
 }
